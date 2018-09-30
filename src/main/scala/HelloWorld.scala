@@ -9,8 +9,6 @@ object HelloWorld{
   }
 
   def output(strs: Array[String]):Unit = {
-    for(str <- strs) {
-      printf("%s ", str)
-    }
+    strs.foreach(printf("%s ", _))
   }
 }
