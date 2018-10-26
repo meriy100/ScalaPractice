@@ -8,9 +8,6 @@ object Closure{
       }
     }
 
-//    val predicate = (x:Int) => x % 2  == 0
-//    val oddFilter = filter(predicate)
     filter((x:Int) => x % 3  == 0)(candidates).foreach(println)
-//    oddFilter(candidates).foreach(println)
   }
 }
