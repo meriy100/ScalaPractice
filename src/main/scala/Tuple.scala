@@ -1,0 +1,15 @@
+object Tuple {
+  def getMaxValue(numbers: List[Int]) = {
+    val max = numbers.max
+    val index = numbers.indexOf(max)
+    (max, index)
+  }
+
+  def main(args: Array[String]){
+    val numbers = List(1, 2, 3, 4, 5, 6, 7, 80, 9, 10)
+    val maxValue = getMaxValue(numbers)
+    printf("max=%s \n", maxValue._1)
+    printf("index=%s \n", maxValue._2)
+  }
+}
+
