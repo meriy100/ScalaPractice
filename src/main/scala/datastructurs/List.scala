@@ -16,7 +16,7 @@ object List {
     case Cons(x, xs) => x * product(xs)
   }
 
-  // Exercise3.1
+  // Exercise3.2
   def tail[A](l: List[A]): List[A] = l match {
     case Nil => Nil // TODO : exception or monad
     case Cons(_, xs) => xs
@@ -28,12 +28,20 @@ object List {
     case Cons(_, xs) => Cons(y, xs)
   }
 
-  // Exercise3.3
+  // Exercise3.4
   def drop[A](l: List[A], n: Int): List[A] = l match {
     case Nil => Nil
     case Cons(_, xs) =>
       if(n > 1) drop(xs, n - 1)
       else xs
+  }
+
+  // Exercise3.5
+  def dropWhile[A](l: List[A], f: A => Boolean): List[A] = l match {
+    case Nil => Nil
+    case Cons(x, xs) =>
+      if(f(x)) dropWhile(xs, f)
+      else Cons(x, xs)
   }
 
   def apply[A](as: A*): List[A] =
