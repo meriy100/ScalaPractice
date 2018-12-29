@@ -7,6 +7,11 @@ class ListTest extends FunSuite with Matchers {
     if(to == from) Cons(to, xs)
     else go(to, from - 1, Cons(from, xs))
 
+  test("testFlatMap") {
+    val xs = List(1,2,3)
+    List.flatMap(xs)(i => List(i, i)) should equal(List(1,1,2,2,3,3))
+  }
+
   test("testSelect") {
     val xs = go(1,10,Nil:List[Int])
     List.select(xs)(_ % 2 == 0) should equal(List(2,4,6,8,10))

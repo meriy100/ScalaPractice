@@ -16,6 +16,10 @@ object List {
     case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
   }
 
+  def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] =
+    foldRight2(as, Nil:List[B])((x, xs) => append2(f(x), xs))
+
+
   def filter[A](as: List[A])(f: A => Boolean): List[A] = as match {
     case Nil => Nil
     case Cons(x, xs) =>
