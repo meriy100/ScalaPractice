@@ -16,6 +16,9 @@ object List {
     case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
   }
 
+  def eachInc(xs: List[Int]) =
+    foldRight2(xs, Nil:List[Int])((x, xs) => Cons(x+1, xs))
+
   def foldLeft2[A, B](as: List[A], z: B)(f: (B, A) => B): B =
     foldRight(as, (b:B) => b)((a,g) => b => g(f(b,a)))(z)
 

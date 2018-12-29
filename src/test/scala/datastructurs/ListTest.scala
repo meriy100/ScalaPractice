@@ -3,6 +3,9 @@ package datastructurs
 import org.scalatest._
 
 class ListTest extends FunSuite with Matchers {
+  test("testEachInc") {
+    List.eachInc(List.join(List(List(1,2,3), List(4,5,6), List(7,8,9)))) should equal(List(2,3,4,5,6,7,8,9,10))
+  }
   test("testJoin") {
     List.join(List(List(1,2,3), List(4,5,6), List(7,8,9))) should equal(List(1,2,3,4,5,6,7,8,9))
   }
