@@ -3,6 +3,17 @@ package datastructurs
 import org.scalatest._
 
 class ListTest extends FunSuite with Matchers {
+  test("testAppend2") {
+    List.append2(List(1,2,3), List(3,4,5)) should equal(List(1,2,3,3,4,5))
+    val xs = List(12,3,4,2,1,3)
+    val ys = List(13,4,5,3,2,4)
+    List.append2(xs, ys) should equal(List.append(xs, ys))
+  }
+
+  test("testAppend") {
+    List.append(List(1,2,3), List(3,4,5)) should equal(List(1,2,3,3,4,5))
+  }
+
   test("testExercise3.8") {
     List.foldRight(List(1,2,3), Nil:List[Int])(Cons(_, _)) should equal(List(1,2,3))
   }
