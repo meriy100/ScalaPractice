@@ -16,26 +16,33 @@ object List {
     case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
   }
 
+  def foldLeft2[A, B](as: List[A], z: B)(f: (B, A) => B): B =
+    foldRight(as, (b:B) => b)((a,g) => b => g(f(b,a)))(z)
+
+
+  def foldRight2[A, B](as: List[A], z: B)(f: (A, B) => B): B =
+    foldLeft(reverse(as), z)((b,a) => f(a,b))
+
+
   def reverse[A](as: List[A]):List[A] = {
-    foldLeft(as, Nil:List[A])((xs, x) => Cons(x, xs))
+    foldLeft2(as, Nil:List[A])((xs, x) => Cons(x, xs))
   }
 
-
   def sum3(ns: List[Int]) =
-    foldLeft(ns, 0)(_ + _)
+    foldLeft2(ns, 0)(_ + _)
   def product3(ns: List[Double]) =
-    foldLeft(ns, 1.0)(_ * _)
+    foldLeft2(ns, 1.0)(_ * _)
   def length2[A](as: List[A]) =
-    foldLeft(as, 0)((x, _) => 1 + x)
+    foldLeft2(as, 0)((x, _) => 1 + x)
 
   def length[A](as: List[A]) =
-    foldRight(as, 0)((_, y) => 1 + y)
+    foldRight2(as, 0)((_, y) => 1 + y)
 
   def sum2(ns: List[Int]) =
-    foldRight(ns, 0)(_ + _)
+    foldRight2(ns, 0)(_ + _)
 
   def product2(ns: List[Double]) =
-    foldRight(ns, 1.0)(_ * _)
+    foldRight2(ns, 1.0)(_ * _)
 
   def sum(ints: List[Int]): Int = ints match {
     case Nil => 0

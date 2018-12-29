@@ -12,6 +12,7 @@ class ListTest extends FunSuite with Matchers {
     List.reverse(List(1, 2)) should equal (List.reverse(Cons(1, Cons(2, Nil))))
     List.reverse(Cons(100, List(1, 2))) should equal(List(2, 1, 100))
     List.reverse(List(2,1,2,3)) should equal(List(3, 2, 1, 2))
+    List.foldRight(List(2,1,3), (b:List[Int]) => b)((a,g) => b => g(Cons(a, b)))(Nil:List[Int])
   }
 
   test("testLength") {
