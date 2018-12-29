@@ -16,6 +16,10 @@ object List {
     case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
   }
 
+  def eachToString(ds: List[Double]) =
+    foldRight2(ds, Nil:List[String])((x, xs) => Cons(x.toString(), xs))
+
+
   def eachInc(xs: List[Int]) =
     foldRight2(xs, Nil:List[Int])((x, xs) => Cons(x+1, xs))
 
