@@ -10,7 +10,7 @@ object Exercise2_1 {
     else go(3, 0, 1)
   }
 
-  def main(args: Array[String]): Unit ={
+  def main(args: Array[String]): Unit = {
     def loop(n: Int, f: Int => Unit, g: Int => Int): Unit = {
       if (1 < n) {
         f(g(n))

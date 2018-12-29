@@ -3,13 +3,75 @@ package datastructurs
 import org.scalatest._
 
 class ListTest extends FunSuite with Matchers {
-  test("testList") {
-    List.sum(List(1, 2)) should equal (List.sum(Cons(1, Cons(2, Nil))))
+  test("testExercise3.8") {
+    List.foldRight(List(1,2,3), Nil:List[Int])(Cons(_, _)) should equal(List(1,2,3))
+  }
+
+  test("testReverse") {
+    List.reverse(Nil) should equal(Nil)
+    List.reverse(List(1, 2)) should equal (List.reverse(Cons(1, Cons(2, Nil))))
+    List.reverse(Cons(100, List(1, 2))) should equal(List(2, 1, 100))
+    List.reverse(List(2,1,2,3)) should equal(List(3, 2, 1, 2))
+  }
+
+  test("testLength") {
+    List.length(Nil) should equal(0)
+    List.length(List(1, 2)) should equal (List.length(Cons(1, Cons(2, Nil))))
+    List.length(Cons(100, List(1, 2))) should equal(1 + List.length(List(1, 2)))
+    List.length(List(2,1,2,3)) should equal(4)
+    List.length(List(2,1,2,3)) + List.length(Cons(1, List(1, 2))) should equal(List.length(List(2,1,2,3, 1, 1, 2)))
+  }
+
+  test("testLength2") {
+    List.length2(Nil) should equal(0)
+    List.length2(List(1, 2)) should equal (List.length(Cons(1, Cons(2, Nil))))
+    List.length2(Cons(2, List(1, 2))) should equal(1 + List.length(List(1, 2)))
+    List.length2(List(2,1,2,3)) should equal(4)
+    List.length2(List(2,1,2,3)) + List.length2(Cons(1, List(1, 2))) should equal(List.length(List(2,1,2,3, 1, 1, 2)))
+  }
+
+  test("testSum3") {
+    List.sum3(Nil) should equal(0)
+    List.sum3(List(1, 2)) should equal (List.sum2(Cons(1, Cons(2, Nil))))
+    List.sum3(Cons(1, List(1, 2))) should equal(1 + List.sum2(List(1, 2)))
+    List.sum3(List(1, 2)) should equal (3)
+    List.sum3(List(1,2,3,4,5)) should equal(15)
+  }
+
+  test("testProduct3") {
+    List.product3(Nil) should equal(1)
+    List.product3(List(0)) should equal(0)
+    List.product3(List(1, 2, 0)) should equal(0)
+    List.product3(List(1, 2, 3, 4, 5)) should equal(120)
+    List.product3(Cons(1, List(1, 2))) should equal(1 * List.product2(List(1, 2)))
   }
 
   test("testSum") {
     List.sum(Nil) should equal(0)
+    List.sum(List(1, 2)) should equal (List.sum(Cons(1, Cons(2, Nil))))
     List.sum(Cons(1, List(1, 2))) should equal(1 + List.sum(List(1, 2)))
+  }
+
+  test("testSum2") {
+    List.sum2(Nil) should equal(0)
+    List.sum2(List(1, 2)) should equal (List.sum2(Cons(1, Cons(2, Nil))))
+    List.sum2(Cons(1, List(1, 2))) should equal(1 + List.sum2(List(1, 2)))
+  }
+
+  test("testProduct") {
+    List.product(Nil) should equal(1)
+    List.product(List(0)) should equal(0)
+    List.product(List(1, 2, 0)) should equal(0)
+    List.product(List(1, 2, 3, 4, 5)) should equal(120)
+    List.product(Cons(1, List(1, 2))) should equal(1 * List.product(List(1, 2)))
+  }
+
+  test("testProduct2") {
+    List.product2(Nil) should equal(1)
+    List.product2(List(0)) should equal(0)
+    List.product2(List(1, 2, 0)) should equal(0)
+    List.product2(List(1, 2, 3, 4, 5)) should equal(120)
+    List.product2(Cons(1, List(1, 2))) should equal(1 * List.product2(List(1, 2)))
   }
 
   test("testTail") {
