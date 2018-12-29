@@ -3,12 +3,21 @@ package datastructurs
 import org.scalatest._
 
 class ListTest extends FunSuite with Matchers {
+  test("testMap") {
+    List.map(List.join(List(List(1.0,2.1,3.2), List(4.3,5.4,6.5))))((x:Double) => x.toString()) should
+      equal(List("1.0","2.1","3.2","4.3","5.4","6.5"))
+    List.map(List.join(List(List(1,2,3), List(4,5,6), List(7,8,9))))(x => x + 1) should equal(List(2,3,4,5,6,7,8,9,10))
+  }
+
   test("testEachToString") {
     List.eachToString(List.join(List(List(1.0,2.1,3.2), List(4.3,5.4,6.5)))) should
       equal(List("1.0","2.1","3.2","4.3","5.4","6.5"))
   }
   test("testEachInc") {
     List.eachInc(List.join(List(List(1,2,3), List(4,5,6), List(7,8,9)))) should equal(List(2,3,4,5,6,7,8,9,10))
+    val xs = List(2,3,1,2)
+    List.eachInc(xs) should equal(List(3,4,2,3))
+    xs should equal(List(2,3,1,2))
   }
   test("testJoin") {
     List.join(List(List(1,2,3), List(4,5,6), List(7,8,9))) should equal(List(1,2,3,4,5,6,7,8,9))
