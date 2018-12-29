@@ -16,6 +16,19 @@ object List {
     case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
   }
 
+  def filter[A](as: List[A])(f: A => Boolean): List[A] = as match {
+    case Nil => Nil
+    case Cons(x, xs) =>
+      if(f(x)) Cons(x, xs)
+      else filter(xs)(f)
+  }
+
+  def select[A](as: List[A])(f: A=>Boolean): List[A] =
+    filter(as)(f) match {
+      case Nil => Nil
+      case Cons(x,xs) => Cons(x, select(xs)(f))
+    }
+
   def map[A,B](as: List[A])(f: A => B):List[B] =
     foldRight2(as, Nil:List[B])((x, xs) => Cons(f(x), xs))
 

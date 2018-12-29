@@ -3,6 +3,19 @@ package datastructurs
 import org.scalatest._
 
 class ListTest extends FunSuite with Matchers {
+  def go(to:Int, from:Int, xs:List[Int]):List[Int] =
+    if(to == from) Cons(to, xs)
+    else go(to, from - 1, Cons(from, xs))
+
+  test("testSelect") {
+    val xs = go(1,10,Nil:List[Int])
+    List.select(xs)(_ % 2 == 0) should equal(List(2,4,6,8,10))
+  }
+  test("testFilter") {
+    val xs = go(1,10,Nil:List[Int])
+    List.filter(xs)(_ == 3) should equal(go(3,10,Nil:List[Int]))
+  }
+
   test("testMap") {
     List.map(List.join(List(List(1.0,2.1,3.2), List(4.3,5.4,6.5))))((x:Double) => x.toString()) should
       equal(List("1.0","2.1","3.2","4.3","5.4","6.5"))
