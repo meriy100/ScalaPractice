@@ -19,9 +19,11 @@ object List {
   def foldLeft2[A, B](as: List[A], z: B)(f: (B, A) => B): B =
     foldRight(as, (b:B) => b)((a,g) => b => g(f(b,a)))(z)
 
-
   def foldRight2[A, B](as: List[A], z: B)(f: (A, B) => B): B =
     foldLeft(reverse(as), z)((b,a) => f(a,b))
+
+  def join[A](aas: List[List[A]]): List[A] =
+    foldLeft(reverse(aas), Nil:List[A])((ys, xs) => append2(xs, ys))
 
   def append2[A](a1: List[A], a2: List[A]): List[A] =
     foldLeft(reverse(a1), a2)((t, h) => Cons(h, t))
