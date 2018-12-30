@@ -3,6 +3,15 @@ package errorhandling
 import org.scalatest._
 
 class OptionTest extends FunSuite with Matchers {
+  test("testSequence") {
+    def go(to:Int, from:Int, xs:List[Option[Int]]):List[Option[Int]] =
+      if(to == from) Some(to) :: xs
+      else go(to, from - 1, Some(from) :: xs)
+
+    val list = go(1, 5, Nil)
+    Option.sequence(list) should equal(Some(List(1,2,3,4,5)))
+  }
+
   test("testMap2") {
     Option.map2(Some(List(1,2,3)), Some(List(4,5,6)))(_ ++ _) should equal(Some(List(1,2,3,4,5,6)))
     Option.map2(None:Option[List[Int]], Some(List(4,5,6)))(_ ++ _) should equal(None)
