@@ -3,6 +3,19 @@ package errorhandling
 import org.scalatest._
 
 class OptionTest extends FunSuite with Matchers {
+  test("testMap2") {
+    Option.map2(Some(List(1,2,3)), Some(List(4,5,6)))(_ ++ _) should equal(Some(List(1,2,3,4,5,6)))
+    Option.map2(None:Option[List[Int]], Some(List(4,5,6)))(_ ++ _) should equal(None)
+    Option.map2(Some(List(1,2,3)), None:Option[List[Int]])(_ ++ _) should equal(None)
+  }
+
+  test("testList") {
+    val abs0: Option[Double] => Option[Double] = Option.lift(math.abs)
+    abs0(Some(1.21)) should equal(Some(1.21))
+    abs0(Some(-3.21)) should equal(Some(3.21))
+    abs0(None) should equal(None)
+  }
+
   test("testVariance") {
     Option.variance(List(1.0,2.0,3.0,4.0,5.0)) should equal(Some(2.0))
     Option.variance(List()) should equal(None)
