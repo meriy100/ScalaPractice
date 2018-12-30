@@ -3,6 +3,11 @@ package errorhandling
 import org.scalatest._
 
 class OptionTest extends FunSuite with Matchers {
+  test("testVariance") {
+    Option.variance(List(1.0,2.0,3.0,4.0,5.0)) should equal(Some(2.0))
+    Option.variance(List()) should equal(None)
+  }
+
   test("testFilter") {
     Some(12) filter (i => i > 10) should equal(Some(12))
     Some(10).filter((i:Int) => i > 10) should equal(None)
