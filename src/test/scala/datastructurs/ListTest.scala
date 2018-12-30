@@ -7,6 +7,12 @@ class ListTest extends FunSuite with Matchers {
     if(to == from) Cons(to, xs)
     else go(to, from - 1, Cons(from, xs))
 
+  test("testZipSum") {
+    val xs = List(1,2,3)
+    val ys = List(4,5,6)
+    List.zipSum(xs, ys) should equal(List(5,7,9))
+  }
+
   test("testFlatMap") {
     val xs = List(1,2,3)
     List.flatMap(xs)(i => List(i, i)) should equal(List(1,1,2,2,3,3))

@@ -16,6 +16,13 @@ object List {
     case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
   }
 
+  def zipSum(xs: List[Int], ys: List[Int]): List[Int] = (xs, ys) match {
+    case (Nil, _) => Nil
+    case (_, Nil) => Nil
+    case (Cons(h1, t1), Cons(h2, t2)) => Cons(h1+h2, zipSum(t1, t2))
+  }
+
+
   def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] =
     foldRight2(as, Nil:List[B])((x, xs) => append2(f(x), xs))
 
