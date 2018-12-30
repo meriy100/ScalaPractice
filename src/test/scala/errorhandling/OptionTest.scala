@@ -3,6 +3,10 @@ package errorhandling
 import org.scalatest._
 
 class OptionTest extends FunSuite with Matchers {
+  test("testTraverse") {
+    Option.traverse(List(1,2,3))(i => Some(i + 1)) should equal(Some(List(2,3,4)))
+  }
+
   test("testSequence") {
     def go(to:Int, from:Int, xs:List[Option[Int]]):List[Option[Int]] =
       if(to == from) Some(to) :: xs
