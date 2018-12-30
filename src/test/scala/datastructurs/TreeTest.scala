@@ -3,6 +3,10 @@ package datastructurs
 import org.scalatest._
 
 class TreeTest extends FunSuite with Matchers {
+  test("testMap") {
+    val tree = Branch(Leaf(1), Branch(Leaf(2), Leaf(3)))
+    Tree.map(tree)(_ + 1) should equal(Branch(Leaf(2), Branch(Leaf(3), Leaf(4))))
+  }
   test("testDepth") {
     val tree = Branch(Leaf(1), Branch(Leaf(2), Leaf(3)))
     Tree.depth(tree) should equal(2)
