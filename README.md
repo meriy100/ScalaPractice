@@ -1,5 +1,6 @@
-# 概要
+[![CircleCI](https://circleci.com/gh/meriy100/ScalaPractice.svg?style=svg)](https://circleci.com/gh/meriy100/ScalaPractice)
 
+# 概要
 Scala の個人学習用リポジトリ
 
 参考文献
