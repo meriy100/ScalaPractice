@@ -40,4 +40,10 @@ object Either {
   def safeDiv(x: Int, y: Int): Either[Exception, Int] =
     try Right(x / y)
     catch { case e: Exception => Left(e) }
+
+  def sequence[E, A](es: List[Either[E, A]]): Either[E, List[A]] =
+    es.foldRight(Right(Nil):Either[E, List[A]])((ex, exs) => ex.map2(exs)((x, xs) => x :: xs))
+
+  def traverse[E, A, B](es: List[A])(f: A => Either[E, B]): Either[E, List[B]] =
+    es.foldRight(Right(Nil):Either[E, List[B]])((ex, exs) => f(ex).map2(exs)((x, xs) => x :: xs))
 }

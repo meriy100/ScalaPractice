@@ -3,6 +3,22 @@ package errorhandling
 import org.scalatest._
 
 class EitherTest extends FunSuite with Matchers {
+  test("testTraverse") {
+    val func:Double => Either[String, Double] = (i) => if(i == 0) Left("Zero!") else Right(3.0/i)
+    Either.traverse(List(1.0,2.0,3.0,4.0))(func) should equal(Right(List(3.0,1.5,1.0,(3.0/4.0))))
+    Either.traverse(List(1.0,0,3.0,4.0))(func) should equal(Left("Zero!"))
+  }
+
+  test("testSequence") {
+    def go(to:Int, from:Int, xs:List[Either[String, Int]]):List[Either[String, Int]] =
+      if(to == from) Right(to) :: xs
+      else go(to, from - 1, Right(from) :: xs)
+
+    val list = go(1, 5, Nil)
+    Either.sequence(list) should equal(Right(List(1,2,3,4,5)))
+    Either.sequence(List(Right(1), Left("This is first left!"), Right(3), Left("This is second left!"))) should equal(Left("This is first left!"))
+  }
+
   test("testMap2") {
     val mean1 = Either.mean(Vector(1,2,3,4,5))
     val mean2 = Either.mean(Vector(1,2,3,4))
