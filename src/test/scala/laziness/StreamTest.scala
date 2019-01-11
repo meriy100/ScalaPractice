@@ -4,6 +4,23 @@ import org.scalatest._
 import Stream._
 
 class StreamTest extends FunSuite with Matchers {
+  test("testFlatMap") {
+    Stream(1,2,3,4,5).flatMap(x => Stream(x + 1)).toList should equal(List(2, 3, 4, 5, 6))
+  }
+
+  test("testAppend") {
+    Stream(1,2,3,4,5).append(Stream(6,7,8)).toList should equal(List(1, 2, 3, 4, 5, 6, 7, 8))
+    Stream(1,2,3,4,5).append(cons(1, cons({ print("Never Called"); 2 }, Stream.empty)))
+  }
+
+  test("testFilter") {
+    Stream(1,2,3,4,5).filter(_ % 2 == 1).toList should equal(List(1, 3, 5))
+  }
+
+  test("testMap") {
+    Stream(1,2,3,4,5).map(_+ 1).toList should equal(List(2, 3, 4, 5, 6))
+  }
+
   test("testHeadOption2") {
     cons(1, cons({ print("Never Called"); 2 }, Stream.empty)).headOption2 should equal(Some(1))
   }
