@@ -1,5 +1,6 @@
 package laziness
 
+import Stream._
 trait Stream[+A] {
   def headOption: Option[A] = this match {
     case Empty => None
@@ -12,8 +13,8 @@ trait Stream[+A] {
   }
 
   def take(n: Int): Stream[A] = this match {
-    case Cons(h, t) if n > 0 => Stream.cons(h(), t().take(n - 1))
-    case _ => Stream.empty
+    case Cons(h, t) if n > 0 => cons(h(), t().take(n - 1))
+    case _ => empty
   }
 
   def drop(n: Int): Stream[A] = this match {
@@ -22,8 +23,8 @@ trait Stream[+A] {
   }
 
   def takeWhile(p: A => Boolean): Stream[A] = this match {
-    case Cons(h, t) if p(h()) => Stream.cons(h(), t().takeWhile(p))
-    case _ => Stream.empty
+    case Cons(h, t) if p(h()) => cons(h(), t().takeWhile(p))
+    case _ => empty
   }
 
   def exists(p: A => Boolean): Boolean =
@@ -41,6 +42,9 @@ trait Stream[+A] {
 
   def forAll(p: A => Boolean): Boolean =
     foldRight(true)((a, b) => p(a) && b)
+
+  def takeWhile2(p: A => Boolean): Stream[A] =
+    foldRight(empty[A])((a, b) => if(p(a)) cons(a, b) else empty )
 }
 case object Empty extends Stream[Nothing]
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]
