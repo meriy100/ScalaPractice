@@ -1,8 +1,13 @@
 package laziness
 
 import org.scalatest._
+import Stream._
 
 class StreamTest extends FunSuite with Matchers {
+  test("testHeadOption2") {
+    cons(1, cons({ print("Never Called"); 2 }, Stream.empty)).headOption2 should equal(Some(1))
+  }
+
   test("testTakeWhile2") {
     Stream(1, 2, 3, 4, 5).takeWhile2(_ < 3).toList should equal(List(1, 2))
   }
@@ -11,7 +16,7 @@ class StreamTest extends FunSuite with Matchers {
     Stream(1, 2, 3).forAll(_ < 5) should be(true)
     Stream(1, 2, 3).forAll(_ < 3) should be(false)
     Cons(()=> 1, () => Cons(() => {print("Never Called"); 2}, () => Empty)).forAll(_ < 1) should be(false)
-    Stream.cons(1, Stream.cons({ print("Never Called"); 2 }, Stream.empty)).forAll(_ < 1) should be(false)
+    cons(1, cons({ print("Never Called"); 2 }, Stream.empty)).forAll(_ < 1) should be(false)
   }
 
   test("testExists") {
@@ -19,7 +24,7 @@ class StreamTest extends FunSuite with Matchers {
     Stream(1, 2, 3).exists(_ == 4) should be(false)
     Stream(1, 2, 3).exists(_ == 1) should be(true)
     Cons(()=> 1, () => Cons(() => {print("Never Called"); 2}, () => Empty)).exists(_ == 1) should be(true)
-    Stream.cons(1, Stream.cons({ print("Never Called"); 2 }, Stream.empty)).exists(_ == 1) should be(true)
+    cons(1, cons({ print("Never Called"); 2 }, Stream.empty)).exists(_ == 1) should be(true)
   }
 
   test("testTakeWhile") {
@@ -31,14 +36,14 @@ class StreamTest extends FunSuite with Matchers {
   }
 
   test("testToTake") {
-    Stream.cons(1, Stream.cons(2, Stream.empty)).take(1).toList should equal(List(1))
+    cons(1, cons(2, Stream.empty)).take(1).toList should equal(List(1))
   }
 
   test("testToList") {
-    Stream.cons(1, Stream.cons(2, Stream.empty)).toList should equal(List(1, 2))
+    cons(1, cons(2, Stream.empty)).toList should equal(List(1, 2))
   }
 
   test("testHeadOption") {
-    Stream.cons(1, Stream.cons(2, Stream.empty)).headOption should equal(Some(1))
+    cons(1, Stream.cons(2, Stream.empty)).headOption should equal(Some(1))
   }
 }
