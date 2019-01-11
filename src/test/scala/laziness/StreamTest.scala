@@ -3,6 +3,10 @@ package laziness
 import org.scalatest._
 
 class StreamTest extends FunSuite with Matchers {
+  test("testTakeWhile") {
+    Stream(1, {print("call me once"); 2}, 3, 4, 5).takeWhile(_ < 3).toList should equal(List(1, 2))
+  }
+
   test("testDrop") {
     Stream(1, 2, 3, 4, 5).drop(3).toList should equal(List(4, 5))
   }

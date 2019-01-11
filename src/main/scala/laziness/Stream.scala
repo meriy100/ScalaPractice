@@ -20,6 +20,11 @@ trait Stream[+A] {
     case Empty => Stream.empty
     case Cons(_, t) => if (n > 1) t().drop(n - 1) else t()
   }
+
+  def takeWhile(p: A => Boolean): Stream[A] = this match {
+    case Cons(h, t) if p(h()) => Stream.cons(h(), t().takeWhile(p))
+    case _ => Stream.empty
+  }
 }
 case object Empty extends Stream[Nothing]
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]
