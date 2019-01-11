@@ -28,7 +28,7 @@ trait Stream[+A] {
   }
 
   def exists(p: A => Boolean): Boolean =
-    foldRight(false)((a, b) => p(a) && b)
+    foldRight(false)((a, b) => p(a) || b)
 //  def exists(p: A => Boolean): Boolean = this match {
 //    case Cons(h, t) => p(h()) || t().exists(p)
 //    case _ => false
