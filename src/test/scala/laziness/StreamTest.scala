@@ -3,8 +3,23 @@ package laziness
 import org.scalatest._
 
 class StreamTest extends FunSuite with Matchers {
+  test("testForAll") {
+    Stream(1, 2, 3).forAll(_ < 5) should be(true)
+    Stream(1, 2, 3).forAll(_ < 3) should be(false)
+    Cons(()=> 1, () => Cons(() => {print("Never Called"); 2}, () => Empty)).forAll(_ < 1) should be(false)
+    Stream.cons(1, Stream.cons({ print("Never Called"); 2 }, Stream.empty)).forAll(_ < 1) should be(false)
+  }
+
+  test("testExists") {
+    Stream(1, 2, 3).exists(_ == 3) should be(true)
+    Stream(1, 2, 3).exists(_ == 4) should be(false)
+    Stream(1, 2, 3).exists(_ == 1) should be(true)
+    Cons(()=> 1, () => Cons(() => {print("Never Called"); 2}, () => Empty)).exists(_ == 1) should be(true)
+    Stream.cons(1, Stream.cons({ print("Never Called"); 2 }, Stream.empty)).exists(_ == 1) should be(true)
+  }
+
   test("testTakeWhile") {
-    Stream(1, {print("call me once"); 2}, 3, 4, 5).takeWhile(_ < 3).toList should equal(List(1, 2))
+    Stream(1, 2, 3, 4, 5).takeWhile(_ < 3).toList should equal(List(1, 2))
   }
 
   test("testDrop") {
