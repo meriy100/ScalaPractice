@@ -4,6 +4,12 @@ import org.scalatest._
 import Stream._
 
 class StreamTest extends FunSuite with Matchers {
+  test("testUnfold") {
+    Stream.unfold(1)((x) => Some((x.toString, x + 2))).take(3).toList should equal(List("1", "3", "5"))
+    Stream.unfold(1)((x) => if(x % 5 == 0) None else Some((x.toString, x + 2))).toList should equal(List("1", "3"))
+
+  }
+
   test("testFibs") {
     Stream.fibs.take(7).toList should equal(List(0, 1, 1, 2, 3, 5, 8))
   }
