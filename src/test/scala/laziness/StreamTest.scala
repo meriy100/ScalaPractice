@@ -4,6 +4,22 @@ import org.scalatest._
 import Stream._
 
 class StreamTest extends FunSuite with Matchers {
+  test("testOnes2") {
+    Stream.ones2.take(4).toList should equal(List(1, 1, 1, 1))
+  }
+
+  test("testConstant2") {
+    Stream.constant2(4).map(_ + 3).take(4).toList should equal(List(7, 7, 7, 7))
+  }
+
+  test("testFrom2") {
+    Stream.from2(4).map(_ + 4).take(5).toList should equal(List(8, 9, 10, 11, 12))
+  }
+
+  test("testFibs2") {
+    Stream.fibs2.take(7).toList should equal(List(0, 1, 1, 2, 3, 5, 8))
+  }
+
   test("testUnfold") {
     Stream.unfold(1)((x) => Some((x.toString, x + 2))).take(3).toList should equal(List("1", "3", "5"))
     Stream.unfold(1)((x) => if(x % 5 == 0) None else Some((x.toString, x + 2))).toList should equal(List("1", "3"))

@@ -82,18 +82,27 @@ object Stream {
     = cons(n, from(n + 1))
 
   def fibs: Stream[Int] = {
-    def fibsN(n: Int, x: Int, y: Int): Stream[Int] = n match {
-      case 0 => cons(0, fibsN(n + 1, 0, 0))
-      case 1 => cons(1, fibsN(n + 1, 0, 1))
-      case _ => cons(x + y, fibsN(n + 1, y, x + y))
-    }
-    fibsN(0, 0, 0)
+    def fibsN(x: Int, y: Int): Stream[Int] =
+      cons(x, fibsN(y, x + y))
+    fibsN(0, 1)
   }
 
   def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = f(z) match {
     case Some((a, s)) => cons(a, unfold(s)(f))
     case None => empty[A]
   }
+
+  def fibs2: Stream[Int] =
+    unfold((0, 1))({ case (x, y) => Some(x, (y, x + y)) })
+
+  def from2(n: Int): Stream[Int] =
+    unfold(n)(x => Some(x, x + 1))
+
+  def constant2[A](a: A): Stream[A] =
+    unfold(a)(x => Some(x, x))
+
+  def ones2: Stream[Int] =
+    constant2(1)
 
   def apply[A](as: A*): Stream[A] =
     if (as.isEmpty) empty
