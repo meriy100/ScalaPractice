@@ -4,6 +4,29 @@ import org.scalatest._
 import Stream._
 
 class StreamTest extends FunSuite with Matchers {
+  test("testZipAll") {
+    Stream(1, 2).zipAll(constant2(2)).take(3).toList should equal(List((Some(1), Some(2)), (Some(2), Some(2)), (None, Some(2))))
+    Stream(1, 2, 3).zipAll(Stream("2", "1")).take(3).toList should equal(List((Some(1), Some("2")), (Some(2), Some("1")), (Some(3), None)))
+    Stream(1).zipAll(Stream("2")).toList should equal(List((Some(1), Some("2"))))
+  }
+
+  test("testZipWith") {
+    Stream(1, 2, 3, 4).zipWith(constant2(2))(_ + _).toList should equal(List(3, 4, 5, 6))
+  }
+
+  test("testTakeWhile3") {
+    Stream(1, 2, 3, 4, 5).takeWhile3(_ < 3).toList should equal(List(1, 2))
+  }
+
+  test("testToTake2") {
+    cons(1, cons(2, Stream.empty)).take2(1).toList should equal(List(1))
+    Stream.constant2(4).map(_ + 3).take2(4).toList should equal(List(7, 7, 7, 7))
+  }
+
+  test("testMap2") {
+    Stream(1,2,3,4,5).map2(_+ 1).toList should equal(List(2, 3, 4, 5, 6))
+  }
+
   test("testOnes2") {
     Stream.ones2.take(4).toList should equal(List(1, 1, 1, 1))
   }
