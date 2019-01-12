@@ -4,6 +4,14 @@ import org.scalatest._
 import Stream._
 
 class StreamTest extends FunSuite with Matchers {
+  test("testConstant") {
+    Stream.constant(4).map(_ + 3).take(4).toList should equal(List(7, 7, 7, 7))
+  }
+
+  test("testFind") {
+    Stream(1,2,3,4).map(_ + 10).find(_ % 2 == 0) should equal(Some(12))
+  }
+
   test("testFlatMap") {
     Stream(1,2,3,4,5).flatMap(x => Stream(x + 1)).toList should equal(List(2, 3, 4, 5, 6))
   }

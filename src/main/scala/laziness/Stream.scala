@@ -59,6 +59,8 @@ trait Stream[+A] {
 
   def flatMap[B](f: A => Stream[B]): Stream[B] =
     foldRight(empty[B])((a, b) => f(a) append b)
+  def find(p: A => Boolean): Option[A] =
+    filter(p).headOption
 }
 case object Empty extends Stream[Nothing]
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]
@@ -72,6 +74,9 @@ object Stream {
   }
 
   def empty[A]: Stream[A] = Empty
+
+  def constant[A](a: A): Stream[A]
+    = cons(a, constant(a))
 
   def apply[A](as: A*): Stream[A] =
     if (as.isEmpty) empty
