@@ -4,6 +4,10 @@ import org.scalatest._
 import Stream._
 
 class StreamTest extends FunSuite with Matchers {
+  test("testFibs") {
+    Stream.fibs.take(7).toList should equal(List(0, 1, 1, 2, 3, 5, 8))
+  }
+
   test("testFrom") {
     Stream.from(4).map(_ + 4).take(5).toList should equal(List(8, 9, 10, 11, 12))
   }
